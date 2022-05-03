@@ -1,0 +1,12 @@
+{
+  "name": "hillel_chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start:debug": "node --inspect-brk app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
