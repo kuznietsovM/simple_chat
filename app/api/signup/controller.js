@@ -7,11 +7,11 @@ const signUpRouter = Router();
 
 const { usersProvider } = require('../../services/index');
 
-signUpRouter.get('/',(req,res) =>{
-    res.sendFile(path.join(__dirname,'..','..','..','views','signup','index.html'));
+signUpRouter.get('/', (req, res) => {
+    res.render('signup');
 })
 
-signUpRouter.post('/',createUserValidation,async (req,res) => {
+signUpRouter.post('/', createUserValidation, async (req, res) => {
     await usersProvider.setUser({
         email: req.body.email,
         name: req.body.name,
@@ -22,5 +22,5 @@ signUpRouter.post('/',createUserValidation,async (req,res) => {
     req.session.username = req.body.name;
     res.redirect('/');
 })
- 
+
 module.exports = signUpRouter;

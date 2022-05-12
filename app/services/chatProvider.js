@@ -1,32 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 
-class ChatDataProvider{
-    constructor(){
+class ChatDataProvider {
+    constructor() {
         this._cache = null;
-        this._dataFilePath = path.join(__dirname, '..','..','data','chats.json');
+        this._dataFilePath = path.join(__dirname, '..', '..', 'data', 'chats.json');
     }
 
-    async getChats(){
-        if(this._cache) return this._cache;
-        try{
+    async getChats() {
+        if (this._cache) return this._cache;
+        try {
             fs.accessSync(this._dataFilePath);
-        }catch{
+        } catch {
             this._cache = [];
             return this._cache;
         }
         const file$ = fs.createReadStream(
             this._dataFilePath,
-            {encoding: 'utf-8'} 
+            { encoding: 'utf-8' }
         );
 
-        const data = await new Promise((res,rej) =>{
+        const data = await new Promise((res, rej) => {
             let result = '';
-            file$.on('data', data =>{
+            file$.on('data', data => {
                 result += data;
             });
 
-            file$.on('end', () =>{
+            file$.on('end', () => {
                 res(result);
             });
 
@@ -36,17 +36,17 @@ class ChatDataProvider{
         return this._cache;
     }
 
-    async getChat(chatId){
-        
-        if(!this._cache){
+    async getChat(chatId) {
+
+        if (!this._cache) {
             this._cache = await this.getChats();
         }
         chatId = +chatId;                                           //to number
-        return this._cache.find(({ id }) => id === chatId );
+        return this._cache.find(({ id }) => id === chatId);
     }
 
-    async setChat(chat){
-        if(!this._cache){
+    async setChat(chat) {
+        if (!this._cache) {
             this._cache = await this.getChats();
         }
         if (chat.id) {
@@ -62,7 +62,7 @@ class ChatDataProvider{
         }
         const file$ = fs.createWriteStream(
             this._dataFilePath,
-            {encoding: 'utf-8'}
+            { encoding: 'utf-8' }
         );
 
         file$.end(JSON.stringify(this._cache));
@@ -71,14 +71,14 @@ class ChatDataProvider{
     }
 
     async deleteChat(chatId) {
-        if(!this._cache){
+        if (!this._cache) {
             this._cache = await this.getChats();
         }
         chatId = +chatId;                                           //to number
         this._cache = this._cache.filter(({ id }) => id !== chatId);
         const file$ = fs.createWriteStream(
             this._dataFilePath,
-            {encoding: 'utf-8'}
+            { encoding: 'utf-8' }
         );
 
         file$.end(JSON.stringify(this._cache));

@@ -15,31 +15,31 @@ const chats = require('./api/chats/controller');
 
 const app = express();
 
-app.use(bodyParser()); 
+app.use(bodyParser());
 app.use(express.json());
 
-app.set('view engine','ejs');
-app.set('views',path.join(__dirname,'..','views'));
-app.set('trust proxy',1);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '..', 'views'));
+app.set('trust proxy', 1);
 
 app.use(session({
     secret: config.get('sessionSecret'),
     resave: false,
     saveUninitialized: true,
     cookie: {
-        auth:false
+        auth: false
     }
 }));
 
 app.use(cookieParser());
-app.use('/assets',express.static(path.join('public','assets')));
+app.use('/assets', express.static(path.join('public', 'assets')));
 
 
-app.use('/',home);
-app.use('/users',users);
-app.use('/chats',chats);
-app.use('/signup',signup);
-app.use('/login',login);
+app.use('/', home);
+app.use('/users', users);
+app.use('/chats', chats);
+app.use('/signup', signup);
+app.use('/login', login);
 
 
 app.use(errors());

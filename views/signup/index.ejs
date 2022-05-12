@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +8,41 @@
     <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="./assets/script.js"></script>
-    <title>Login</title>
+    <title>Sign up</title>
 </head>
+
 <body>
-    <form action ="/login" method="POST">
+    <form action="/signup" method="POST">
         <div class="container">
             <div class="textview">
                 <span>
                     Email:
                 </span>
                 <input type="text" name="email">
+
+                <span>
+                    Name:
+                </span>
+                <input type="text" name="name">
+
+                <span>
+                    Date of Birth:
+                </span>
+                <input type="text" name="DoB">
+
                 <span>
                     Password:
                 </span>
-                <input type="text" name="password">
+                <input type="password" name="password">
+
+                <span>
+                    Password confirm:
+                </span>
+                <input type="password" name="passwordConfirm">
             </div>
-            <button>Login</button>
+            <button>Sign up and login</button>
         </div>
     </form>
 </body>
+
 </html>

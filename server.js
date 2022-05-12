@@ -5,6 +5,6 @@ const app = require('./app/index');
 const { port } = config.get('server');
 
 
-app.listen(port,() =>{
+app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

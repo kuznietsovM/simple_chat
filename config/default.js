@@ -1,7 +1,7 @@
 module.exports = {
-    server:{
+    server: {
         port: 3000,
     },
-    db:{},
+    db: {},
     sessionSecret: 'oewhg3o9893hbleb'
 };

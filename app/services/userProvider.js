@@ -1,32 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 
-class UserDataProvider{
-    constructor(){
+class UserDataProvider {
+    constructor() {
         this._cache = null;
-        this._dataFilePath = path.join(__dirname, '..','..','data','users.json');
+        this._dataFilePath = path.join(__dirname, '..', '..', 'data', 'users.json');
     }
 
-    async getUsers(){
-        if(this._cache) return this._cache;
-        try{
+    async getUsers() {
+        if (this._cache) return this._cache;
+        try {
             fs.accessSync(this._dataFilePath);
-        }catch{
+        } catch {
             this._cache = [];
             return this._cache;
         }
         const file$ = fs.createReadStream(
             this._dataFilePath,
-            {encoding: 'utf-8'} 
+            { encoding: 'utf-8' }
         );
 
-        const data = await new Promise((res,rej) =>{
+        const data = await new Promise((res, rej) => {
             let result = '';
-            file$.on('data', data =>{
+            file$.on('data', data => {
                 result += data;
             });
 
-            file$.on('end', () =>{
+            file$.on('end', () => {
                 res(result);
             });
 
@@ -36,17 +36,17 @@ class UserDataProvider{
         return this._cache;
     }
 
-    async getUser(userId){
-        
-        if(!this._cache){
+    async getUser(userId) {
+
+        if (!this._cache) {
             this._cache = await this.getUsers();
         }
         userId = +userId;                                           //to number
-        return this._cache.find(({ id }) => id === userId );
+        return this._cache.find(({ id }) => id === userId);
     }
 
-    async setUser(user){
-        if(!this._cache){
+    async setUser(user) {
+        if (!this._cache) {
             this._cache = await this.getUsers();
         }
         if (user.id) {
@@ -62,7 +62,7 @@ class UserDataProvider{
         }
         const file$ = fs.createWriteStream(
             this._dataFilePath,
-            {encoding: 'utf-8'}
+            { encoding: 'utf-8' }
         );
 
         file$.end(JSON.stringify(this._cache));
@@ -71,14 +71,14 @@ class UserDataProvider{
     }
 
     async deleteUser(userId) {
-        if(!this._cache){
+        if (!this._cache) {
             this._cache = await this.getUsers();
         }
         userId = +userId;                                           //to number
         this._cache = this._cache.filter(({ id }) => id !== userId);
         const file$ = fs.createWriteStream(
             this._dataFilePath,
-            {encoding: 'utf-8'}
+            { encoding: 'utf-8' }
         );
 
         file$.end(JSON.stringify(this._cache));

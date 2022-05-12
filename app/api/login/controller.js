@@ -7,21 +7,21 @@ const loginRouter = Router();
 
 const { usersProvider } = require('../../services/index');
 
-loginRouter.get('/',(req,res) =>{
-    res.sendFile(path.join(__dirname,'..','..','..','views','login','index.html'));
+loginRouter.get('/', (req, res) => {
+   res.render('login');
 })
 
-loginRouter.post('/',loginValidation,async (req,res) =>{
+loginRouter.post('/', loginValidation, async (req, res) => {
     users = await usersProvider.getUsers();
-    user = users.find(({ email }) => email === req.body.email );
-    if(user){
-        if(req.body.password == user.password){
+    user = users.find(({ email }) => email === req.body.email);
+    if (user) {
+        if (req.body.password == user.password) {
             req.session.auth = true;
             req.session.username = user.name;
-        }else{
+        } else {
             res.send('Password wrong');
         }
-    }else{
+    } else {
         res.send('Email wrong');
     }
     res.redirect('/');
