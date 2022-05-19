@@ -1,22 +1,27 @@
-html { background-color: #EAEAEA }
-html, body,.container { 
+html {
+    background-color: #EAEAEA
+}
+
+html,
+body,
+.container {
     height: 100%;
     font-size: 18px;
 }
 
-.container{
+.container {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.buttons{
+.buttons {
     display: flex;
     width: 30%;
     justify-content: space-between;
 }
 
-button{
+button {
     cursor: pointer;
     outline: 0;
     color: #fff;
@@ -30,23 +35,26 @@ button{
     padding: 6px 12px;
     font-size: 16px;
     border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
 button:hover {
     color: #fff;
     background-color: #0b5ed7;
     border-color: #0a58ca;
 }
-ul{
+
+ul {
     list-style-image: url('../icon-body.png');
 }
-.users{
+
+.users {
     display: flex;
     justify-content: center;
     width: 20%;
 }
 
-.textview{
+.textview {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
