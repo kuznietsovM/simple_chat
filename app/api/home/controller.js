@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const { usersProvider } = require('../../services/index');
 
+const { User } = require('../../../models');
+
 
 const homeRouter = Router();
 
 homeRouter.get('/', async (req, res) => {
     res.render('index', {
-        users: await usersProvider.getUsers(),
+        users: await User.find(),
         auth: req.session.auth,
         username: req.session.username,
     });

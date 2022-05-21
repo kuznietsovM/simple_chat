@@ -1,28 +1,32 @@
 const { Router } = require('express');
 
-const { chatsProvider } = require('../../services/index');
+const { Chat } = require('../../../models');
 
 const chatRouter = Router();
 
 chatRouter.get('/', async (req, res) => {
-    res.json(await chatsProvider.getChats());
+    res.json(await Chat.find());
 });
 
 chatRouter.get('/:id', async (req, res) => {
-    res.json(await chatsProvider.getChat(req.params.id));
+    res.json(await Chat.findById(req.params.id));
 });
 
 chatRouter.post('/', async (req, res) => {
-    res.json(await chatsProvider.setChat(req.body));
+    const chat = new Chat({
+        user_id1: req.body.user_id1,
+        user_id2: req.body.user_id2,
+    });
+    res.json(await chat.save());
 });
 
 chatRouter.put('/:id', async (req, res) => {
-    const chat = req.body;
-    res.json(await chatsProvider.setChat({ id: req.params.id, ...chat }));
+    const newChat = req.body;
+    res.json(await Chat.findByIdAndUpdate(req.params.id, newChat, { new: true }));
 });
 
 chatRouter.delete('/:id', async (req, res) => {
-    await chatsProvider.deleteChat(req.params.id);
+    await Chat.findByIdAndDelete(req.params.id);
     res.status(200).send();
 });
 

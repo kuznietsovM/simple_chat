@@ -1,29 +1,26 @@
 const { Router } = require('express');
-const path = require('path');
-const fs = require('fs');
 const { loginValidation } = require('./validation');
 
 const loginRouter = Router();
 
-const { usersProvider } = require('../../services/index');
+const { User } = require('../../../models');
 
 loginRouter.get('/', (req, res) => {
-   res.render('login');
+    res.render('login');
 })
 
 loginRouter.post('/', loginValidation, async (req, res) => {
-    users = await usersProvider.getUsers();
-    user = users.find(({ email }) => email === req.body.email);
+    user = await User.findOne({ email: req.body.email });
     if (user) {
         if (req.body.password == user.password) {
             req.session.auth = true;
             req.session.username = user.name;
+            res.redirect('/');
         } else {
             res.send('Password wrong');
         }
     } else {
         res.send('Email wrong');
     }
-    res.redirect('/');
 })
 module.exports = loginRouter;
