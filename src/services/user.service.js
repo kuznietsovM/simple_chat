@@ -1,37 +1,55 @@
 const { User } = require('../models');
 const { mailerService } = require('.');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 
 
 const login = async (email, password) => {
-    const user = await User.findOne({email});
-    if(user && await bcrypt.compare(password, user.password) && user.verified == true){
+    const user = await User.findOne({ email });
+    if (user && await bcrypt.compare(password, user.password) && user.verified == true) {
         return user;
     }
     throw new Error('Invalid credentials');
- };
+};
 
-const signup = async (name, email, DoB, password) => { 
-    try{ 
+const signup = async (name, email, DoB, password) => {
+    try {
         const user = new User({
             name,
             email,
             DoB,
-            password: await bcrypt.hash(password,10)
+            password: await bcrypt.hash(password, 10)
         });
         await user.save();
-        
-        //send email verification
-        const message = {
-            from: 'mailforapphillel@gmail.com',
+
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'nedra.larson80@ethereal.email',
+                pass: 'yGZTejtdT7yFJx9WpJ'
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        const mailOptions = {
+            from: 'nedra.larson80@ethereal.email',
             to: user.email,
             subject: 'Verification',
-            text: `You are successfuly registred on our site!To verify your email please follow this link: http://localhost:3000/verify/${user.verifyingKey} `
-        }
+            text: `You are successfuly registred on our site!To verify your email please follow this link: http://localhost:3000/verify/${user.verifyingKey}`
+        };
 
-        //mailerService(message);
-        
-        
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
         return user;
     } catch (e) {
         if (e.code === 11000) {
@@ -40,16 +58,16 @@ const signup = async (name, email, DoB, password) => {
     }
 };
 
-const verify = async verificationKey => {
-    const user = await User.findOne({ verificationKey })
-    if(user){
+const verify = async verifyingKey => {
+    const user = await User.findOne({ verifyingKey: verifyingKey });
+    if (user) {
         user.verified = true;
         await user.save();
         return user;
-    }else{
-        throw new Error('Invalid verification key ')
+    } else {
+        throw new Error('Invalid verification key ');
     }
- };
+};
 
 
 module.exports = {

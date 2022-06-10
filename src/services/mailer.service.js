@@ -9,6 +9,7 @@ const transporter = nodemailer.createTransport({
   });
 
 const mailer = message =>{
+  console.log(message);
     transporter.sendMail(message, (err,info) =>{
         if(err) return console.log(err);
         console.log('Email sent:',info);
