@@ -36,11 +36,13 @@
                             <%-user.name%>
                                 <% if(auth){%>
                                     <% if(username!=user.name){ %>
-                                        <form action="/chat" method="GET">
+                                        <form action="/chat" method="POST">
+                                            <input type="hidden" name="user1" value=<%= userID %> >
+                                            <input type="hidden" name="user2" value=<%= user._id %> >
                                             <button>Chat</button>
                                         </form>
-                                        <% } %>
-                                            <% } %>
+                                    <% } %>
+                                <% } %>
                         </li>
                         <% }) %>
                 </ul>

@@ -1,6 +1,8 @@
 const { Router } = require('express');
 
-const { User } = require('../../../models');
+const { User } = require('../../models');
+const { userService } = require('../../services');
+const { signupValidation } = require('../../validations');
 const userRouter = Router();
 
 userRouter.get('/', async (req, res) => {
@@ -11,14 +13,9 @@ userRouter.get('/:id', async (req, res) => {
     res.json(await User.findById(req.params.id));
 });
 
-userRouter.post('/', async (req, res) => {
-    const user = new User({
-        email: req.body.email,
-        name: req.body.name,
-        DoB: req.body.DoB,
-        password: req.body.password
-    });
-    res.json(await user.save());
+userRouter.post('/',signupValidation.apiValidator, async (req, res) => {
+    const user = await userService.signup(req.body.name,req.body.email,req.body.DoB,req.body.password);
+    res.json(user);
 });
 
 userRouter.put('/:id', async (req, res) => {

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { Chat } = require('../../../models');
+const { Chat } = require('../../models');
 
 const chatRouter = Router();
 
