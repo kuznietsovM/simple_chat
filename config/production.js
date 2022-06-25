@@ -1,9 +1,9 @@
 module.exports = {
     ...require('./default'),
     server: {
-        port: 80
+        port: process.env.PORT || 80
     },
     db: {
-        connectionString: ''
+        connectionString: process.env.MONGO_URL
     }
 };
