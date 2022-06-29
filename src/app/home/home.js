@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { User } = require('../../models');
+const { User,Chat } = require('../../models');
 
 
 const homeRouter = Router();
@@ -10,7 +10,8 @@ homeRouter.get('/', async (req, res) => {
         users: await User.find(),
         auth: req.session.auth,
         username: req.session.username,
-        userID: req.session.userID
+        userID: req.session.userID,
+        chats:await Chat.find()
     });
 });
 

@@ -7,14 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <script src="./assets/script.js"></script>
     <title>Chat</title>
 </head>
 
 <body>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" defer></script>
+    <script src="/assets/chat.js" defer></script>
     <h1>
-        Soon...
+        Chat with: <%-usernameToChat %>
     </h1>
+
+    <% messages.forEach( message=>{ %>
+        <%-message.text%><br>
+    <%})%>
+    <input type="text" id="message">
+    <button id="sendButton">Send message</button>
+    
 </body>
 
 </html>
