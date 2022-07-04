@@ -37,10 +37,12 @@ app.use('/', appRouter);
 
 mongoose.connect(config.get('db.connectionString'))
     .then(() => {
-        app.listen(port, () => {
+
+        const server = app.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);
         });
-        sockets.init();
+        sockets.init(server);
+
     })
     .catch(e => {
         console.log('Connection error: ', e);

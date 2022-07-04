@@ -23,8 +23,8 @@ io.on('connection', socket => {
     });
 });
 
-const init = () => {
-    io.listen(config.get('socket.port'));
+const init = (server) => {
+    io.listen(server);
 };
 
 module.exports = {

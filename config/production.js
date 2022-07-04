@@ -4,7 +4,7 @@ module.exports = {
         port: process.env.PORT || 80
     },
     socket : {
-        port: process.env.SOCKET_PORT || 81,
+        port: process.env.PORT || 81,
         host: 'ws://hillel-chat.herokuapp.com'
     },
     db: {

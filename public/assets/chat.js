@@ -1,7 +1,7 @@
 let socket = '';
 
 if(location.hostname == 'localhost'){
-    socket = io('ws://localhost:3001');
+    socket = io('ws://localhost:3000');
 }else{
     socket = io('ws://'+ location.hostname);
 }
@@ -23,6 +23,5 @@ socket.on("connect", () => {
 
     socket.on('onUpdate:server', payload => {
         location.reload();
-        console.log('client',payload);
     })
 });
