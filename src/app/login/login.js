@@ -9,7 +9,7 @@ const { userService } = require('../../services');
 
 loginRouter.get('/', (req, res) => {
     res.render('login', { error: '' });
-})
+});
 
 loginRouter.post('/', loginValidation.appValidator, async (req, res) => {  //TODO : app validator
     const { error } = req.validation;

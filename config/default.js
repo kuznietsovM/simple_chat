@@ -2,6 +2,10 @@ module.exports = {
     server: {
         port: 3000,
     },
+    socket : {
+        port: 3001,
+        host: 'ws://localhost:3001'
+    },
     jwt : {
         secret : 'jwtsecretkey'
     },

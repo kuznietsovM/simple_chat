@@ -39,7 +39,7 @@ const signup = async (name, email, DoB, password) => {
             from: 'nedra.larson80@ethereal.email',
             to: user.email,
             subject: 'Verification',
-            text: `You are successfuly registred on our site!To verify your email please follow this link: http://localhost:3000/verify/${user.verifyingKey}`
+            text: `You are successfuly registred on our site!To verify your email please follow this link: https://hillel-chat.herokuapp.com/verify/${user.verifyingKey}`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {

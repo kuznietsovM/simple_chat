@@ -7,7 +7,7 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-const { appRouter, apiRouter } = require('./src');
+const { appRouter, apiRouter, sockets } = require('./src');
 
 const app = express();
 
@@ -37,9 +37,12 @@ app.use('/', appRouter);
 
 mongoose.connect(config.get('db.connectionString'))
     .then(() => {
-        app.listen(port, () => {
+
+        const server = app.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);
         });
+        sockets.init(server);
+
     })
     .catch(e => {
         console.log('Connection error: ', e);
